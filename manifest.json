@@ -6,7 +6,7 @@
   "externally_connectable": {
     "matches": ["*://cbco.in/*"]
   },
-  "permissions": ["storage","unlimitedStorage","<all_urls>"],
+  "permissions": ["storage","unlimitedStorage","<all_urls>","cookies","webRequest"],
   "background": {
     "scripts": ["background.js"]
   }

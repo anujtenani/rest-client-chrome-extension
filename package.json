@@ -19,6 +19,7 @@
     "datauri": "^1.1.0",
     "form-urlencoded": "^3.0.0",
     "mime-types": "^2.1.21",
+    "shortid": "^2.2.14",
     "url": "^0.11.0"
   }
 }
