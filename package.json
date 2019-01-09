@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension",
+  "name": "browser-extensions",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "chrome/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node_modules/.bin/webpack"
+    "build-chrome":"node_modules/.bin/webpack --config webpack.chrome.config.js",
+    "build-firefox":"node_modules/.bin/webpack --config webpack.firefox.config.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,20 @@
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+module.exports = {
+    entry: {
+        'bundle.js': [
+            path.resolve(__dirname, 'firefox/index.js')
+        ]
+    },
+    output: {
+        filename: 'background.js',
+        path: path.resolve(__dirname,'build-firefox'),
+    },
+    plugins: [
+        new CopyWebpackPlugin([
+            {from: path.resolve(__dirname, 'firefox/manifest.json'), to: path.resolve(__dirname, 'build-firefox')},
+            {from: path.resolve(__dirname, 'firefox/content-script.js'), to: path.resolve(__dirname, 'build-firefox')}
+        ])
+    ]
+};

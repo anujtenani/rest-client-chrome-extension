@@ -1,2 +1,4 @@
 # rest-client-chrome-extension
-Chrome extension for the REST client
+
+Chrome and Firefox extensions for the REST client
+
