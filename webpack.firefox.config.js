@@ -1,5 +1,5 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -14,7 +14,9 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([
             {from: path.resolve(__dirname, 'firefox/manifest.json'), to: path.resolve(__dirname, 'build-firefox')},
-            {from: path.resolve(__dirname, 'firefox/content-script.js'), to: path.resolve(__dirname, 'build-firefox')}
+            {from: path.resolve(__dirname, 'firefox/content-script.js'), to: path.resolve(__dirname, 'build-firefox')},
+            {from: path.resolve(__dirname, 'images/'), to: path.resolve(__dirname, 'build-firefox/images')}
         ])
-    ]
+    ],
+    //devtool: 'source-map'
 };

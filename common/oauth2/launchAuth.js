@@ -1,6 +1,12 @@
 
 var oauthTabs = {};
 
+/**
+ * @param url
+ * @param redirectUri
+ * @param openerTabId - Not supported in edge and firefox for android
+ * @returns {Promise<any>}
+ */
 function startOAuth(url, redirectUri, openerTabId){
     return new Promise((resolve, reject)=>{
         chrome.tabs.create({url, openerTabId}, (tab)=>{
@@ -9,6 +15,10 @@ function startOAuth(url, redirectUri, openerTabId){
     });
 }
 
+/**
+ * SUPPORTED ON ALL BROWSERS
+ * https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onRemoved
+ */
 chrome.tabs.onRemoved.addListener((tabId)=>{
     if(oauthTabs[tabId]){
         if(oauthTabs[tabId].reject){
@@ -18,6 +28,10 @@ chrome.tabs.onRemoved.addListener((tabId)=>{
     }
 });
 
+/**
+ * SUPPORTED ON ALL BROWSER
+ * https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/onUpdated
+ */
 chrome.tabs.onUpdated.addListener((tabId, changeInfo)=>{
     if(oauthTabs[tabId]) {
         const {redirectUri, resolve, reject} = oauthTabs[tabId];

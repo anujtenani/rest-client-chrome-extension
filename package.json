@@ -4,8 +4,8 @@
   "description": "",
   "main": "chrome/index.js",
   "scripts": {
-    "build-chrome":"node_modules/.bin/webpack --config webpack.chrome.config.js",
-    "build-firefox":"node_modules/.bin/webpack --config webpack.firefox.config.js"
+    "build-chrome": "node_modules/.bin/webpack --config webpack.chrome.config.js",
+    "build-firefox": "node_modules/.bin/webpack --config webpack.firefox.config.js"
   },
   "author": "",
   "license": "ISC",
