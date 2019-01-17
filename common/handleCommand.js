@@ -27,6 +27,7 @@ function handleCommand(request, sender, sendResponse){
         }
         case "request.send": {
             const {url, headers, body, method, cancelKey} = request.payload;
+            console.log('executing', url, headers, body,method);
             sendRequest(url, method, headers, body)
                 .then((result) => {
                     if(!result.err){

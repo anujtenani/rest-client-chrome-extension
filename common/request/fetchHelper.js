@@ -1,6 +1,6 @@
 const {DataUriToBlob, BlobToText, BlobToDataUri} = require('./blobfunc');
 const {charsetFromType, charsetFromHeaders} = require('./mimefunc');
-const {createFormBody,createMultipartBody } = require('./formBodyHelper');
+// const {createFormBody,createMultipartBody } = require('./formBodyHelper');
 
 async function executeFetch(url, method="GET", headers, body){
     const requestObject = {
@@ -12,45 +12,23 @@ async function executeFetch(url, method="GET", headers, body){
         redirect: "follow", // manual, *follow, error
         referrer: "no-referrer", // no-referrer, *client
     }
-
-
     const {bodyType, data} = body;
     switch (bodyType) {
-        case "xml":
-            requestObject.body = data.value;
-            requestObject.headers['Content-Type'] = 'application/xml';
-            break;
-        case "text":
-            requestObject.body = data.value;
-            requestObject.headers['Content-Type'] = 'text/plain';
-            break;
-        case "json":
-            requestObject.body = JSON.stringify(data.value);
-            requestObject.headers['Content-Type'] = 'application/json';
-            break;
-        case "binary":
-            requestObject.body = DataUriToBlob(data.data.uri);
-            requestObject.headers['Content-Type'] = requestObject.data.type;
-            break;
-        case "graphql":
-            requestObject.body = JSON.stringify({query:data.value});
-            requestObject.headers['Content-Type'] = 'application/json';
-            break;
-        case "form":
-        case "application/x-www-form-urlencoded":
-            requestObject.body = createFormBody(getBodyParams(body));
-            requestObject.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-            break;
         case "multipart":
+        case "binary":
         case "multipart/form-body":
-            requestObject.body =  createMultipartBody(getBodyParams(body.params));
+            requestObject.body = DataUriToBlob(data);
+            break;
+        default:
+            requestObject.body = data;
     }
-
     try {
+        const startTime = new Date().getTime();
         const response = await fetch(url, requestObject);
-        const {headers, statusCode, statusText, body} = await parseResponseObject(response);
+        const endTime = new Date().getTime();
+        const {headers, statusCode, statusText, body, bodySize} = await parseResponseObject(response);
         return {
-            headers, statusCode, statusText, body, href:url, method
+            headers, statusCode, statusText, body, href:url, method, bodySize, startTime, endTime
         }
     }catch(e){
         console.log(e);
@@ -76,7 +54,7 @@ async function parseResponseObject(response){
     const blob = await response.blob();
     const charset = blob.type ? charsetFromType(blob.type) : charsetFromHeaders(headers);
     const body = charset ? await BlobToText(blob) : await BlobToDataUri(blob);
-    return {headers:h, statusCode: status, statusText, body};
+    return {headers:h, statusCode: status, statusText, body, bodySize: blob.size};
 }
 
 module.exports = executeFetch;

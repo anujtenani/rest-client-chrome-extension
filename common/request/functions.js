@@ -1,8 +1,4 @@
 const executeFetch = require('./fetchHelper');
-const url = require('url');
-const {charsetFromType, charsetFromHeaders} = require('./mimefunc');
-const {DataUriToBlob, BlobToText, BlobToDataUri} = require('./blobfunc');
-const {parseResponseObject} = require('./axiosHelper');
 
 /**
  * Executes the request using axios
@@ -10,6 +6,7 @@ const {parseResponseObject} = require('./axiosHelper');
  * @param method
  * @param headers
  * @param body
+ * @param bodyType
  * @returns {Promise<any[] | never>}
  */
 async function sendRequest(url, method='GET', headers = {}, body = {}){

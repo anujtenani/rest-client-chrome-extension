@@ -1,6 +1,9 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin'); //installed via npm
+let pathsToClean = [
+    'build-chrome'
+]
 module.exports = {
     entry: {
         'bundle.js': [
@@ -11,19 +14,13 @@ module.exports = {
         filename: 'background.js',
         path: path.resolve(__dirname,'build-chrome'),
     },
-
-    optimization: {
-        minimize: false
-    },
-
     plugins: [
+        new CleanWebpackPlugin(pathsToClean),
         new CopyWebpackPlugin([
-            {from: path.resolve(__dirname, 'chrome/manifest.json'), to: path.resolve(__dirname, 'build-chrome')},
-            {from: path.resolve(__dirname, 'images/'), to: path.resolve(__dirname, 'build-chrome/images')},
-            {from: path.resolve(__dirname, 'test.html'), to: path.resolve(__dirname, 'build-chrome/test.html')},
-            {from: path.resolve(__dirname, 'test.js'), to: path.resolve(__dirname, 'build-chrome/test.js')}
-
+            {from: path.resolve(__dirname, 'chrome/'), to: path.resolve(__dirname, 'build-chrome'), ignore:["index.js", "test.js"]},
+            {from: path.resolve(__dirname, 'images/'), to: path.resolve(__dirname, 'build-chrome/images'), ignore:['.DS_Store']},
+       //     {from: path.join(__dirname,'..','frontend','build/'), to: path.resolve(__dirname, 'build-chrome'),ignore:['.DS_Store','*.js.map']},
         ])
     ],
-   // devtool: 'source-map'
+    //devtool: 'source-map'
 };

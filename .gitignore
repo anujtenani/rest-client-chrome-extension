@@ -3,3 +3,5 @@ build/
 .idea/
 build-firefox/
 build-chrome/
+test.html
+test.js

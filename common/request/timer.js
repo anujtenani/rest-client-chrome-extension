@@ -64,6 +64,7 @@ function getLastRequestTiming(){
         console.log("= Calculate Load Times: there are NO `resource` performance records");
         return;
     }
+    logLoadTimes();
     const resource = resources[resources.length - 1];
     const {name, redirectStart, redirectEnd, domainLookupEnd, domainLookupStart, connectEnd, connectStart,
         secureConnectionStart, responseStart, responseEnd, startTime, requestStart, fetchStart} = resource;

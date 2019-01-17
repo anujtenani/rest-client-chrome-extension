@@ -1,10 +1,11 @@
 {
-  "name": "REST Room - Advanced API Testing Client",
+  "name": "REST Ape - Advanced API Testing Client",
+  "short_name":"REST Client",
   "version": "1.1",
   "description": "Advanced REST API Client with WebSocket and GraphQL Support",
   "manifest_version": 2,
   "externally_connectable": {
-    "matches": ["*://cbco.in/*"]
+    "matches": ["*://cbco.in/*","*://serene-kepler-4c2cb3.netlify.com/*","*://restape.com/*"]
   },
   "permissions": ["storage","unlimitedStorage","<all_urls>","cookies","webRequest","identity","identity.email"],
   "background": {
