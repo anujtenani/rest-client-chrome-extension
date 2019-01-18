@@ -12,16 +12,20 @@ async function executeFetch(url, method="GET", headers, body){
         redirect: "follow", // manual, *follow, error
         referrer: "no-referrer", // no-referrer, *client
     }
-    const {bodyType, data} = body;
-    switch (bodyType) {
-        case "multipart":
-        case "binary":
-        case "multipart/form-body":
-            requestObject.body = DataUriToBlob(data);
-            break;
-        default:
-            requestObject.body = data;
-    }
+    console.log("body is", body, typeof body);
+    if(typeof body === "object") {
+        const {bodyType, data} = body;
+        switch (bodyType) {
+            case "multipart":
+            case "binary":
+            case "multipart/form-body":
+                requestObject.body = DataUriToBlob(data);
+                break;
+            default:
+                requestObject.body = data;
+        }
+    }else requestObject.body = body;
+
     try {
         const startTime = new Date().getTime();
         const response = await fetch(url, requestObject);

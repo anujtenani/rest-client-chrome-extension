@@ -1,4 +1,3 @@
-
 var oauthTabs = {};
 
 /**
@@ -35,11 +34,17 @@ chrome.tabs.onRemoved.addListener((tabId)=>{
 chrome.tabs.onUpdated.addListener((tabId, changeInfo)=>{
     if(oauthTabs[tabId]) {
         const {redirectUri, resolve, reject} = oauthTabs[tabId];
-        if (resolve && changeInfo && changeInfo.url && changeInfo.url.startsWith(redirectUri)) {
-            resolve(changeInfo.url);
-            console.log('closing tab and resolving with', changeInfo.url);
-            oauthTabs[tabId] = undefined;
-            chrome.tabs.remove(tabId);
+        console.log("matching", redirectUri, changeInfo.url);
+        if (resolve && changeInfo && changeInfo.url) {
+            const url = changeInfo.url.replace("http://",'').replace("https://",'');
+            const redir = redirectUri.replace("http://",'').replace("https://",'');
+            console.log("matching", url, redir);
+            if(url.startsWith(redir)) {
+                resolve(changeInfo.url);
+                console.log('closing tab and resolving with', changeInfo.url);
+                oauthTabs[tabId] = undefined;
+                chrome.tabs.remove(tabId);
+            }
         }
     }
 });
